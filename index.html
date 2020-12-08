@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Trading Tool</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"/>
+    <link href="styles.css" rel="stylesheet">
+</head>
+<body>
+
+    <div id="app">
+        <div id="container" class="content-align-center">
+            <h1>Trading Helper</h1>
+
+            <div class="input-group col-sm-6">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="tax">Taxe</span>
+                </div>
+                <input v-model.number="tax" type="number" min="1" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+            </div>
+
+            <div class="input-group col-sm-6">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Action market price</span>
+                </div>
+                <input v-model.number="actionMarketPrice" type="number" min="0" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+            </div>
+
+            <div class="input-group col-sm-6">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Number of actions</span>
+                </div>
+                <input v-model.number="numberOfActions" type="number" min="0" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+            </div>
+
+            <div class="alert alert-danger col-sm-6" role="alert">
+                Tax % value : {{ 100/((actionMarketPrice*numberOfActions)/tax) }}%
+            </div>
+
+            <div class="alert alert-info col-sm-6" role="alert">
+            What minimum value do I need to sell to make a profit ? {{ parseFloat(minValueToSell = depense/numberOfActions) }} ( {{ minValueToSell }} * {{ numberOfActions }} )
+            </div>
+
+            <div class="form-group">
+                <div class="input-group col-sm-6">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Selling price :</span>
+                    </div>
+                        <input v-model.number="sellingValue" type="number" min="0" class="form-control w-25" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+                </div>
+            </div>
+
+            <div class="input-group-prepend">
+                <span class="input-group-text">
+                    <span class="text-success">
+                        + {{ ((sellingValue-actionMarketPrice)/actionMarketPrice)*100 }} %
+                    </span>
+                </span>
+            </div>
+
+            <div class="row">
+                <div class="alert alert-danger col-sm-6" role="alert">
+                    Expenses : {{ depense=tax + (actionMarketPrice*numberOfActions) }} €
+                </div>
+
+                <div class="alert alert-success col-sm-6" role="alert">
+                    Earnings : {{ revente = (sellingValue*numberOfActions) }} €
+                </div>
+            </div>
+
+            <div class="alert alert-success col-sm-12" role="alert">
+                <span>Benefit : + {{ benefit = revente-depense }} €</span>
+            </div>
+
+        </div>
+    </div>
+    </div>
+    <script>
+        const app = new Vue({
+            el: '#app',
+            data: {
+                tax: 0,
+                actionMarketPrice: 0,
+                numberOfActions: 1,
+                sellingValue: 0,
+                revente: 0
+            }
+        })
+    </script>
+
+    <style>
+
+    </style>
+</body>
+</html>

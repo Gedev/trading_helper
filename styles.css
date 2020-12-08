@@ -1,0 +1,28 @@
+html, body {
+    background-color: #eee5d6;
+    text-align: center;
+    height: 100%;
+}
+
+#app {
+    background-color: #eee5d6;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#container {
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 20px;
+    background-color: #fcf6f1;
+    left: 50%;
+    width: 60%;
+    margin: auto;
+}
+
+#container h1 {
+    text-align: center;
+}
