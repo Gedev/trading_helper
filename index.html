@@ -15,7 +15,7 @@
 
             <div class="input-group col-sm-6">
                 <div class="input-group-prepend">
-                    <span class="input-group-text" id="tax">Taxe</span>
+                    <span class="input-group-text" id="tax">Tax / action</span>
                 </div>
                 <input v-model.number="tax" type="number" min="1" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
             </div>
@@ -27,6 +27,26 @@
                 <input v-model.number="actionMarketPrice" type="number" min="0" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
             </div>
 
+            <!-- SELLING PRICE -->
+            <div class="form-row">
+                <div class="form-group col-md-5">
+                    <label class="sr-only" for="inlineFormInputGroup">Username</label>
+                    <div class="input-group mb-2">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">Selling price :</div>
+                        </div>
+                        <input v-model.number="sellingValue" type="number" min="0" class="form-control w-25" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+                    </div>
+                </div>
+
+                <!-- PERCENTAGE CAPITAL GAIN -->
+                <div class="form-group col-md-1">
+                    <span class="text-success">
+                        + {{ parseFloat(((sellingValue-actionMarketPrice)/actionMarketPrice)*100).toFixed(2) }} %
+                    </span>
+                </div>
+            </div>
+
             <div class="input-group col-sm-6">
                 <div class="input-group-prepend">
                     <span class="input-group-text">Number of actions</span>
@@ -35,33 +55,17 @@
             </div>
 
             <div class="alert alert-danger col-sm-6" role="alert">
-                Tax % value : {{ 100/((actionMarketPrice*numberOfActions)/tax) }}%
+                Tax % value : {{ percentageTaxValueRounded = parseFloat((100/(actionMarketPrice/tax))).toFixed(2)}} %
             </div>
+
 
             <div class="alert alert-info col-sm-6" role="alert">
-            What minimum value do I need to sell to make a profit ? {{ parseFloat(minValueToSell = depense/numberOfActions) }} ( {{ minValueToSell }} * {{ numberOfActions }} )
-            </div>
-
-            <div class="form-group">
-                <div class="input-group col-sm-6">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">Selling price :</span>
-                    </div>
-                        <input v-model.number="sellingValue" type="number" min="0" class="form-control w-25" aria-label="Default" aria-describedby="inputGroup-sizing-default">
-                </div>
-            </div>
-
-            <div class="input-group-prepend">
-                <span class="input-group-text">
-                    <span class="text-success">
-                        + {{ ((sellingValue-actionMarketPrice)/actionMarketPrice)*100 }} %
-                    </span>
-                </span>
+            Minimum value to make a profit : {{ parseFloat(minValueToSell = depense/numberOfActions) }} ( {{ minValueToSell }} * {{ numberOfActions }} )
             </div>
 
             <div class="row">
                 <div class="alert alert-danger col-sm-6" role="alert">
-                    Expenses : {{ depense=tax + (actionMarketPrice*numberOfActions) }} €
+                    Expenses : {{ depense= (actionMarketPrice*numberOfActions) + (tax*numberOfActions) }} €
                 </div>
 
                 <div class="alert alert-success col-sm-6" role="alert">
@@ -69,13 +73,13 @@
                 </div>
             </div>
 
-            <div class="alert alert-success col-sm-12" role="alert">
-                <span>Benefit : + {{ benefit = revente-depense }} €</span>
+            <div class="alert alert-success" role="alert">
+                <span>Benefit : {{ benefit = revente-depense }} €</span>
             </div>
 
         </div>
     </div>
-    </div>
+
     <script>
         const app = new Vue({
             el: '#app',
@@ -84,7 +88,7 @@
                 actionMarketPrice: 0,
                 numberOfActions: 1,
                 sellingValue: 0,
-                revente: 0
+                revente: 0,
             }
         })
     </script>
